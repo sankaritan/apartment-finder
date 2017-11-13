@@ -43,10 +43,9 @@ def post_listing_to_slack(sc, listing):
     if listing["commute_time"] is not None:
         commute_time = round(listing["commute_time"] / 60)
 
-    desc = "{0} | *{1}* | {2} | {3} | {4} | <{5}> | <{6}>".format(listing["area"],
+    desc = "{0} | *{1}* | {2} | {3} | <{4}> | <{5}>".format(listing["area"],
                                                                   listing["price"],
                                                                   commute_time,
-                                                                  listing["bart_dist"],
                                                                   listing["name"],
                                                                   listing['google_link'],
                                                                   listing["url"])

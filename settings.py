@@ -1,6 +1,5 @@
 import os
 
-
 ## Price
 
 # The minimum rent you want to pay per month.
@@ -36,7 +35,7 @@ BOXES = {
 # one of the boxes you defined, it will be checked to see if the neighborhood name it was listed under matches one
 # of these.  This is less accurate than the boxes, because it relies on the owner to set the right neighborhood,
 # but it also catches listings that don't have coordinates (many listings are missing this info).
-NEIGHBORHOODS = ["east village"]
+NEIGHBORHOODS = ["east village", "upper east side"]
 
 # Spotify Office location
 OFFICE = (40.739527, -73.994145)

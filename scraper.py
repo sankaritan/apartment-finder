@@ -31,7 +31,6 @@ class Listing(Base):
     location = Column(String)
     cl_id = Column(Integer, unique=True)
     area = Column(String)
-    bart_stop = Column(String)
 
 Base.metadata.create_all(engine)
 
@@ -96,15 +95,15 @@ def scrape_area(area):
                 location=result["where"],
                 cl_id=result["id"],
                 area=result["area"],
-                bart_stop=result["bart"]
             )
 
             # Save the listing so we don't grab it again.
             # session.add(listing)
             # session.commit()
 
-            # Return the result if it's near a bart station, or if it is in an area we defined.
-            if len(result["bart"]) > 0 or len(result["area"]) > 0:
+            # Return if it is in an area we defined.
+            # print(result)
+            if len(result["area"]) > 0:
                 results.append(result)
 
     return results
