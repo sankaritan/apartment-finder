@@ -47,12 +47,14 @@ def post_listing_to_slack(sc, listing):
     if listing["commute_time"] is not None:
         commute_time = round(listing["commute_time"] / 60)
 
-    desc = "{0} | *{1}* | {2} | {3} | <{4}> | <{5}>".format(listing["area"],
-                                                            listing["price"],
-                                                            commute_time,
-                                                            listing["name"],
-                                                            listing['google_link'],
-                                                            listing["url"])
+    desc = "*{0}* | *{1}* | {2} mins\n{3}\n- <{4}>\n- <{5}>" \
+        .format(listing["area"],
+                listing["price"],
+                commute_time,
+                listing["name"],
+                listing["url"],
+                listing[
+                    'google_link'])
     sc.api_call(
         "chat.postMessage", channel=settings.SLACK_CHANNEL, text=desc,
         username='pybot', icon_emoji=':robot_face:'
@@ -69,28 +71,11 @@ def find_points_of_interest(geotag, location):
     """
     area_found = False
     area = ""
-    # min_dist = None
-    # near_bart = False
-    # bart_dist = "N/A"
-    # bart = ""
-    # Look to see if the listing is in any of the neighborhood boxes we defined.
     for a, coords in settings.BOXES.items():
         if in_box(geotag, coords):
             area = a
             area_found = True
 
-    # Check to see if the listing is near any transit stations.
-    # for station, coords in settings.TRANSIT_STATIONS.items():
-    #     dist = coord_distance(coords[0], coords[1], geotag[0], geotag[1])
-    #     if (min_dist is None or dist < min_dist) and dist < settings.MAX_TRANSIT_DIST:
-    #         bart = station
-    #         near_bart = True
-    #
-    #     if (min_dist is None or dist < min_dist):
-    #         bart_dist = dist
-
-    # If the listing isn't in any of the boxes we defined, check to see if the string description of the neighborhood
-    # matches anything in our list of neighborhoods.
     if len(area) == 0:
         for hood in settings.NEIGHBORHOODS:
             if hood in location.lower():
@@ -102,9 +87,6 @@ def find_points_of_interest(geotag, location):
     return {
         "area_found": area_found,
         "area": area,
-        # "near_bart": near_bart,
-        # "bart_dist": bart_dist,
-        # "bart": bart,
         "commute_time": commute_time,
         "google_link": google_link
     }

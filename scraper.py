@@ -13,6 +13,7 @@ engine = create_engine('sqlite:///listings.db', echo=False)
 
 Base = declarative_base()
 
+
 class Listing(Base):
     """
     A table to store data on craigslist listings.
@@ -32,10 +33,12 @@ class Listing(Base):
     cl_id = Column(Integer, unique=True)
     area = Column(String)
 
+
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 session = Session()
+
 
 def scrape_area(area):
     """
@@ -43,8 +46,11 @@ def scrape_area(area):
     :param area:
     :return: A list of results.
     """
-    cl_h = CraigslistHousing(site=settings.CRAIGSLIST_SITE, area=area, category=settings.CRAIGSLIST_HOUSING_SECTION,
-                             filters={'max_price': settings.MAX_PRICE, "min_price": settings.MIN_PRICE})
+    cl_h = CraigslistHousing(site=settings.CRAIGSLIST_SITE, area=area,
+                             category=settings.CRAIGSLIST_HOUSING_SECTION,
+                             filters={'max_price': settings.MAX_PRICE,
+                                      "min_price": settings.MIN_PRICE,
+                                      'min_bedrooms': settings.MIN_BEDROOMS})
 
     results = []
     gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=20)
@@ -107,6 +113,7 @@ def scrape_area(area):
                 results.append(result)
 
     return results
+
 
 def do_scrape():
     """
