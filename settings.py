@@ -3,10 +3,10 @@ import os
 ## Price
 
 # The minimum rent you want to pay per month.
-MIN_PRICE = 1000
+MIN_PRICE = 2000
 
 # The maximum rent you want to pay per month.
-MAX_PRICE = 5000
+MAX_PRICE = 2200
 
 ## Location preferences
 
@@ -29,13 +29,17 @@ BOXES = {
         [40.716503, -73.980792],
         [40.733036, -73.987304],
     ],
+    "mujtestingbox": [
+        [40.789600, -73.981413],
+        [40.775950, -73.976123]
+    ]
 }
 
 # A list of neighborhood names to look for in the Craigslist neighborhood name field. If a listing doesn't fall into
 # one of the boxes you defined, it will be checked to see if the neighborhood name it was listed under matches one
 # of these.  This is less accurate than the boxes, because it relies on the owner to set the right neighborhood,
 # but it also catches listings that don't have coordinates (many listings are missing this info).
-NEIGHBORHOODS = ["east village", "upper east side"]
+NEIGHBORHOODS = ["upper east side", "east village"]
 
 # Spotify Office location
 OFFICE = (40.739527, -73.994145)
@@ -43,13 +47,13 @@ OFFICE = (40.739527, -73.994145)
 ## Transit preferences
 
 # The farthest you want to live from a transit stop.
-MAX_TRANSIT_DIST = 3 # kilometers
+# MAX_TRANSIT_DIST = 3  # kilometers
 
 # Transit stations you want to check against.  Every coordinate here will be checked against each listing,
 # and the closest station name will be added to the result and posted into Slack.
-TRANSIT_STATIONS = {
-    "astor_place_station": [40.730197, -73.990720]
-}
+# TRANSIT_STATIONS = {
+#     "astor_place_station": [40.730197, -73.990720]
+# }
 
 ## Search type preferences
 
@@ -64,7 +68,7 @@ CRAIGSLIST_HOUSING_SECTION = 'nfb'
 # How long we should sleep between scrapes of Craigslist.
 # Too fast may get rate limited.
 # Too slow may miss listings.
-SLEEP_INTERVAL = 20 * 60 # 20 minutes
+SLEEP_INTERVAL = 20 * 60  # 20 minutes
 
 # Which slack channel to post the listings into.
 SLACK_CHANNEL = "#housing"

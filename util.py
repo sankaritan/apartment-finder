@@ -30,6 +30,10 @@ def in_box(coords, box):
     """
     if box[0][0] < coords[0] < box[1][0] and box[1][1] < coords[1] < box[0][1]:
         return True
+
+    if box[1][0] < coords[0] < box[0][0] and box[0][1] < coords[1] < box[1][1]:
+        return True
+
     return False
 
 
@@ -44,11 +48,11 @@ def post_listing_to_slack(sc, listing):
         commute_time = round(listing["commute_time"] / 60)
 
     desc = "{0} | *{1}* | {2} | {3} | <{4}> | <{5}>".format(listing["area"],
-                                                                  listing["price"],
-                                                                  commute_time,
-                                                                  listing["name"],
-                                                                  listing['google_link'],
-                                                                  listing["url"])
+                                                            listing["price"],
+                                                            commute_time,
+                                                            listing["name"],
+                                                            listing['google_link'],
+                                                            listing["url"])
     sc.api_call(
         "chat.postMessage", channel=settings.SLACK_CHANNEL, text=desc,
         username='pybot', icon_emoji=':robot_face:'
