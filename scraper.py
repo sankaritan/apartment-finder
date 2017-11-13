@@ -56,8 +56,8 @@ def scrape_area(area):
             break
         except Exception:
             continue
-        listing = session.query(Listing).filter_by(cl_id=result["id"]).first()
-
+        # listing = session.query(Listing).filter_by(cl_id=result["id"]).first()
+        listing = None
         # Don't store the listing if it already exists.
         if listing is None:
             if result["where"] is None:
@@ -100,8 +100,8 @@ def scrape_area(area):
             )
 
             # Save the listing so we don't grab it again.
-            session.add(listing)
-            session.commit()
+            # session.add(listing)
+            # session.commit()
 
             # Return the result if it's near a bart station, or if it is in an area we defined.
             if len(result["bart"]) > 0 or len(result["area"]) > 0:

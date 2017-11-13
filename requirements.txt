@@ -1,4 +1,5 @@
 python-craigslist>=1.0.3
+requests
 sqlalchemy
 python-dateutil
 ipython
