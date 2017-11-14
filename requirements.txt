@@ -4,3 +4,8 @@ sqlalchemy
 python-dateutil
 ipython
 slackclient
+flask
+flask-jsonpify
+flask-sqlalchemy
+flask-restful
+flask-cors

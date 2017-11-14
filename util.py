@@ -1,6 +1,7 @@
 import settings
 import math
 import requests
+import json
 
 
 def coord_distance(lat1, lon1, lat2, lon2):
@@ -28,10 +29,10 @@ def in_box(coords, box):
     :param box: Two tuples, where first is the bottom left, and the second is the top right of the box.
     :return: Boolean indicating if the coordinates are in the box.
     """
-    if box[0][0] < coords[0] < box[1][0] and box[1][1] < coords[1] < box[0][1]:
+    if box['south'] < coords[0] < box['north'] and box['west'] < coords[1] < box['east']:
         return True
 
-    if box[1][0] < coords[0] < box[0][0] and box[0][1] < coords[1] < box[1][1]:
+    if box['north'] < coords[0] < box['south'] and box['east'] < coords[1] < box['west']:
         return True
 
     return False
@@ -71,9 +72,9 @@ def find_points_of_interest(geotag, location):
     """
     area_found = False
     area = ""
-    for a, coords in settings.BOXES.items():
-        if in_box(geotag, coords):
-            area = a
+    for box in get_boxes():
+        if in_box(geotag, box['bounds']):
+            area = box['title']
             area_found = True
 
     if len(area) == 0:
@@ -90,6 +91,26 @@ def find_points_of_interest(geotag, location):
         "commute_time": commute_time,
         "google_link": google_link
     }
+
+
+def get_boxes():
+    # A list of neighborhoods and coordinates that you want to look for apartments in.
+    # Any listing that has coordinates attached will be checked to see which area it is in.
+    # If there's a match, it will be annotated with the area name.
+    # If no match, the neighborhood field, which is a string, will be checked to see if it matches
+    # anything in NEIGHBORHOODS.
+    try:
+        file = open(settings.BOXES_FILE, 'r')
+        boxes = json.loads(file.read())
+        file.close()
+        return boxes
+    except FileNotFoundError:
+        print('ERROR: boxes.json not found!')
+    except ValueError:
+        print('ERROR: could not parse boxes.json!')
+    except:
+        print('Oooups! Something went wrong!')
+    return []
 
 
 def compute_transit_distance(geotag):

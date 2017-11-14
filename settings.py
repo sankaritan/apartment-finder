@@ -1,5 +1,4 @@
 import os
-
 ## Price
 
 # The minimum rent you want to pay per month.
@@ -22,21 +21,6 @@ CRAIGSLIST_SITE = 'newyork'
 # You only need the last three letters of the URLs.
 AREAS = ["mnh", "brk"]
 
-# A list of neighborhoods and coordinates that you want to look for apartments in.  Any listing that has coordinates
-# attached will be checked to see which area it is in.  If there's a match, it will be annotated with the area
-# name.  If no match, the neighborhood field, which is a string, will be checked to see if it matches
-# anything in NEIGHBORHOODS.
-BOXES = {
-    "eastvillage": [
-        [40.716503, -73.980792],
-        [40.733036, -73.987304],
-    ],
-    "mujtestingbox": [
-        [40.789600, -73.981413],
-        [40.775950, -73.976123]
-    ]
-}
-
 # A list of neighborhood names to look for in the Craigslist neighborhood name field. If a listing doesn't fall into
 # one of the boxes you defined, it will be checked to see if the neighborhood name it was listed under matches one
 # of these.  This is less accurate than the boxes, because it relies on the owner to set the right neighborhood,
@@ -45,6 +29,8 @@ NEIGHBORHOODS = ["upper east side", "east village"]
 
 # Spotify Office location
 OFFICE = (40.739527, -73.994145)
+
+BOXES_FILE = './boxes.json'
 
 ## Transit preferences
 
@@ -70,7 +56,7 @@ CRAIGSLIST_HOUSING_SECTION = 'nfb'
 # How long we should sleep between scrapes of Craigslist.
 # Too fast may get rate limited.
 # Too slow may miss listings.
-SLEEP_INTERVAL = 20 * 60  # 20 minutes
+SLEEP_INTERVAL = 2 * 60  # 20 minutes
 
 # Which slack channel to post the listings into.
 SLACK_CHANNEL = "#housing"
